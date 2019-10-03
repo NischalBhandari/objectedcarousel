@@ -1,0 +1,50 @@
+.header-wrapper{
+
+}
+.body-wrapper{
+
+}
+.footer-wrapper{
+
+}
+.clearfix::after,.clearfix::before{
+	content:"";
+	clear:both;
+	display:table;
+}
+.main-container{
+width:100%;
+overflow:hidden;
+background-color:blue;
+}
+.container{
+	width:40%;
+	/*overflow:hidden;*/
+	/*overflow:hidden;*/
+	position:relative;
+	overflow:hidden;
+/*	left:10%;
+	top:20%;*/
+	background-color: green;
+	border:3px solid black;
+/*	position:relative;*/
+}
+.wrapper{
+	overflow:hidden;
+/*	position:absolute;*/
+	width:1600%
+/*	width:300%;*/
+/*	overflow:auto;*/
+/*	position:relative;*/
+/*	position:absolute;
+	left:100px;*/
+	
+}
+.wrapper img{
+/*display:inline-block;*/
+float:left;
+width:1000px;
+height:400px;
+
+}
+
