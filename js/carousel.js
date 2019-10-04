@@ -16,7 +16,7 @@
 
 			this.element.style.backgroundColor="red";
 			this.element.setAttribute("id",`wrapping${this.size}`);
-			
+			/*this.element.style.width=this.width+"%";*/
 /*			this.element.style.height="400px";*/
 			this.element.style.position="relative";
 			this.element.style.border="1px solid black";
@@ -31,15 +31,37 @@
 		this.init();
 		this.getTotalSize=function(){
 
-			var totalimagesize=this.element.getElementsByTagName(`img`);
+			/*var totalimagesize=this.element.getElementsByTagName(`img`);
 			
 			console.log(totalimagesize);
 			for(var i=0;i<totalimagesize.length;i++){
-				this.width=this.width+totalimagesize[i].clientWidth;
+				this.width=this.width+totalimagesize[i].width;
 			}
 			var imageWidth=this.width/totalimagesize.length;
 			console.log(this.width);
-			return(this.width);
+			return(this.width);*/
+			var totalimagesize = this.element.getElementsByClassName(`img-define`);
+			var width=0;
+			console.log(totalimagesize);
+			for(var i=0;i<totalimagesize.length;i++){
+					width=width+totalimagesize[i].clientWidth;
+					console.log(totalimagesize[i].clientWidth);
+			}
+			this.width=width;
+			return (width);
+		}
+
+		this.getIndividualSize=function(){
+
+			var totalimagesize=this.element.getElementsByClassName(`img-define`);
+			var width=0;
+			console.log(totalimagesize);
+			for(var i=0;i<totalimagesize.length;i++){
+				width=width+totalimagesize[i].clientWidth;
+			}
+			var imageWidth=width/totalimagesize.length;
+			console.log("this is upper imagewidth",imageWidth);
+			return(imageWidth);
 		}
 		
 	
@@ -52,13 +74,26 @@
 		this.size=size;
 		this.height=height;
 		this.init=function(){
+
 			for(var i =0;i<size;i++){
+			this.imgwrapper=document.createElement('div');
+			this.imgwrapper.classList.add('img-define');
+			this.imgwrapper.classList.add('clearfix');
+			this.imgwrapper.style.width=document.body.clientWidth;
+
 			this.element=document.createElement('img');
 			this.element.setAttribute('src',`./images/test${i}.jpg`);
+			this.element.style.width=document.body.clientWidth;
+			window.onresize=function(event){
+				this.imgwrapper.width=document.body.clientWidth+ "px";
+				this.element.width=document.body.clientWidth + "px";
+			}
+			this.imgwrapper.appendChild(this.element);
+
 			/*console.log(this.element);*/
 			/*this.element.classList.add('image-define');*/
 /*			this.element.style.height=this.height+'px';*/
-			this.parentElem.appendChild(this.element);
+			this.parentElem.appendChild(this.imgwrapper);
 		}
 		}
 
@@ -68,7 +103,7 @@ function individualWrapper(parentElem,size){
 		this.slide=0;
 		this.index=0;
 		this.width=0;
-		this.imagesize=1000;
+		this.imagesize=0;
 		this.size=size;
 
 	this.parentElem=parentElem;
@@ -86,8 +121,37 @@ function individualWrapper(parentElem,size){
 	this.init=function(){
 		var test = new wrapper(this.element,this.size);
 		var x = test.getTotalSize();
+		var y = test.getIndividualSize();
+		this.imagesize=y;
+		console.log(test);
 		console.log(x);
 		this.width=x;
+		window.onresize=function(){
+			var x = test.getTotalSize();
+			/*that.slide=0;*/
+			that.imagesize=0;
+			that.width=0;
+			that.width=x;
+			console.log("this is resized",x);
+		}
+		window.onresize=function(){
+			var y = test.getIndividualSize();
+			/*that.slide=0;*/
+			that.width=0;
+			this.imagesize=0;
+			this.imagesize=y;
+			console.log("this is resized",y);
+		}
+		window.onresize=function(event){
+			that.imagesize=document.body.clientWidth;
+/*			that.slide=0;
+			that.imagesize=0;
+			that.width=0;
+			that.width=document.body.clientWidth;
+			that.imagesize=document.body.clientWidth;*/
+
+		}
+		/*this.imagesize=y;*/
 		this.makeButtonLeft();
 		this.makeButtonRight();
 		this.makeIndicator();
@@ -96,6 +160,7 @@ function individualWrapper(parentElem,size){
 		/*var x =test.getTotalSize();*/
 		/*wrapper.getTotalSize();*/
 	}
+
 	this.makeButtonLeft=function(){
 			var leftButton=document.createElement("BUTTON");
 				leftButton.innerHTML="left";
@@ -107,17 +172,23 @@ function individualWrapper(parentElem,size){
 
 			leftButton.onclick=function(){
 			var childElement = that.element.childNodes;
-			console.log(that.slide);
+			
 			that.slide-=that.imagesize;
+			console.log(that.imagesize);
+			console.log(that.slide);
+			console.log(that.width);
 			that.slide=that.slide%that.width;
+			console.log(that.slide);
 
 			/*that.slide=that.slide%width;*/
-
+			/*that.transition(that.slide);*/
+			/*that.transition(that.slide);*/
 			childElement[0].style.marginLeft=that.slide+'px';
 			that.changeActive();
 			}
 
 		}
+
 
 	this.makeButtonRight=function(){
 			var RightButton=document.createElement("BUTTON");
@@ -168,7 +239,7 @@ function individualWrapper(parentElem,size){
 		this.changeActive=function(){
 				var activeButtons=this.element.querySelectorAll("#indicator>button");
 					activeButtons[that.index].style.backgroundColor="blue";
-					that.index=that.slide/that.imagesize;
+					that.index=Math.ceil(that.slide/that.imagesize);
 					that.index*=-1;
 					activeButtons[that.index].style.backgroundColor="green";
 		}
@@ -183,12 +254,11 @@ function individualWrapper(parentElem,size){
 				var index=ev[ev.length-1];
 				index=parseInt(index);
 				var slide=that.imagesize*index;
-				console.log("imagesize",that.imagesize);
 				slide*=-1;
 				that.transition(slide);
 				/*childElement[0].style.marginLeft=slide+"px";*/
 				that.slide=slide;
-				that.changeActive();
+				/*that.changeActive();*/
 
 
 		
@@ -200,7 +270,7 @@ function individualWrapper(parentElem,size){
 			this.automaticSlide=function(){
 				var childElement = that.element.childNodes;
 				setInterval(function(){
-					var change=that.slide-1000;
+					var change=that.slide-that.imagesize;
 					change=change%that.width;
 					that.transition(change)
 
