@@ -13,33 +13,18 @@
 			this.element.classList.add('clearfix');
 			var images=new image(this.element,size=5,height=400).init();
 			this.parentElem.appendChild(this.element);
-
 			this.element.style.backgroundColor="red";
 			this.element.setAttribute("id",`wrapping${this.size}`);
-			/*this.element.style.width=this.width+"%";*/
-/*			this.element.style.height="400px";*/
 			this.element.style.position="relative";
 			this.element.style.border="1px solid black";
 			return this.element;
-/*			this.makeButtonLeft();
-			this.makeButtonRight();*/
-			/*this.getTotalSize();*/
+
 			
 			
 
 		}
 		this.init();
 		this.getTotalSize=function(){
-
-			/*var totalimagesize=this.element.getElementsByTagName(`img`);
-			
-			console.log(totalimagesize);
-			for(var i=0;i<totalimagesize.length;i++){
-				this.width=this.width+totalimagesize[i].width;
-			}
-			var imageWidth=this.width/totalimagesize.length;
-			console.log(this.width);
-			return(this.width);*/
 			var totalimagesize = this.element.getElementsByClassName(`img-define`);
 			var width=0;
 			console.log(totalimagesize);
@@ -144,21 +129,12 @@ function individualWrapper(parentElem,size){
 		}
 		window.onresize=function(event){
 			that.imagesize=document.body.clientWidth;
-/*			that.slide=0;
-			that.imagesize=0;
-			that.width=0;
-			that.width=document.body.clientWidth;
-			that.imagesize=document.body.clientWidth;*/
-
 		}
-		/*this.imagesize=y;*/
 		this.makeButtonLeft();
 		this.makeButtonRight();
 		this.makeIndicator();
 		this.makeIndicatorClick();
 		this.automaticSlide();
-		/*var x =test.getTotalSize();*/
-		/*wrapper.getTotalSize();*/
 	}
 
 	this.makeButtonLeft=function(){
@@ -179,10 +155,6 @@ function individualWrapper(parentElem,size){
 			console.log(that.width);
 			that.slide=that.slide%that.width;
 			console.log(that.slide);
-
-			/*that.slide=that.slide%width;*/
-			/*that.transition(that.slide);*/
-			/*that.transition(that.slide);*/
 			childElement[0].style.marginLeft=that.slide+'px';
 			that.changeActive();
 			}
@@ -205,10 +177,6 @@ function individualWrapper(parentElem,size){
 			that.slide-=that.imagesize;
 			that.slide=-that.slide;
 			that.slide=that.slide%that.width;
-
-			/*that.slide=that.slide%width;*/
-
-
 			childElement[0].style.marginLeft=that.slide+'px';
 			that.changeActive();
 			}
@@ -256,9 +224,7 @@ function individualWrapper(parentElem,size){
 				var slide=that.imagesize*index;
 				slide*=-1;
 				that.transition(slide);
-				/*childElement[0].style.marginLeft=slide+"px";*/
 				that.slide=slide;
-				/*that.changeActive();*/
 
 
 		
