@@ -45,6 +45,7 @@ background-color:blue;
 	
 }
 .img-define{
+	overflow:hidden;
 	/*width:1000px;*/
 	/*width:20%;*/
 	float:left;
@@ -52,6 +53,7 @@ background-color:blue;
 	
 }
 .wrapper img{
+	overflow:hidden;
 	/*width:1000px;*/
 	/*display:block;*/
 	/*width:1000px;*/
